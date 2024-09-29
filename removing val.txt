@@ -1,0 +1,50 @@
+"""print(f"{option1Text.get()} {option2Text.get()}")
+        print(option2currencies)
+        try:
+            val = option1Text.get()
+            option2currencies.remove(val)
+            print(f"Removed value '{val}'")
+        except ValueError:
+            pass
+        option2 = OptionMenu(root, option2Text, *option2currencies)"""
+
+
+
+def option1Callback(*args):
+
+    if option1Text.get() == option2Text.get():  # The two dropdowns are the same.
+        index = currencies.index(option2Text.get())
+        # If the option selected is at the end of the list.
+        if index+1 > len(currencies)-1:
+            option2Text.set(currencies[0])
+        else:
+            option2Text.set(currencies[index+1])
+
+
+def option2Callback(option2, *args):
+
+    if option1Text.get() in option2currencies:
+        try:
+            option2currencies.remove(option1Text.get())
+            print("Removed value.")
+        except ValueError:
+            pass
+        try:
+            option2.destroy()
+        except:
+            pass
+        option2 = OptionMenu(root, option2Text, *option2currencies)
+        option2.pack()
+    else:
+        try:
+            option2.destroy()
+        except:
+            pass
+        option2 = OptionMenu(root, option2Text, *currencies)
+        option2.pack()
+
+
+currencies = ["USD", "GBP", "EUR"]
+
+option1Text.set(currencies[0])
+option2Text.set(currencies[0])
